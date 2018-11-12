@@ -1,17 +1,15 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_random_user/data/repository/net/parser/user_parser.dart';
+import 'package:flutter_random_user/data/repository/net/api_service.dart';
 import 'package:flutter_random_user/model/user.dart';
-import 'package:http/http.dart' as http;
 
 class UsersPage extends StatefulWidget {
+  final ApiService apiService = ApiService();
+
   @override
   State<StatefulWidget> createState() => _UsersPageState();
 }
 
 class _UsersPageState extends State<UsersPage> {
-  static const String URL = 'https://randomuser.me/api/?results=10';
   List<User> _users;
 
   @override
@@ -21,10 +19,9 @@ class _UsersPageState extends State<UsersPage> {
   }
 
   Future<void> doRequest() async {
-    final response = await http.get(URL);
+    List<User> newUsers = await widget.apiService.getUsers();
     setState(() {
-      var body = json.decode(response.body);
-      _users = UserParser.fromJson(body);
+      _users = newUsers;
     });
   }
 
