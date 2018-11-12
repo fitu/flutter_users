@@ -1,54 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_random_user/data/repository/net/api_service.dart';
+import 'package:flutter_random_user/data/bloc/bloc_provider.dart';
+import 'package:flutter_random_user/data/bloc/user/user_bloc.dart';
 import 'package:flutter_random_user/model/user.dart';
 
-class UsersPage extends StatefulWidget {
-  final ApiService apiService = ApiService();
-
-  @override
-  State<StatefulWidget> createState() => _UsersPageState();
-}
-
-class _UsersPageState extends State<UsersPage> {
-  List<User> _users;
-
-  @override
-  void initState() {
-    doRequest();
-    super.initState();
-  }
-
-  Future<void> doRequest() async {
-    List<User> newUsers = await widget.apiService.getUsers();
-    setState(() {
-      _users = newUsers;
-    });
-  }
-
+class UsersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Random User',
-      home: Scaffold(
-        body: Center(
-          child: buildUserList(),
-        ),
-      ),
-    );
-  }
+    final UserBloc userBloc = BlocProvider.userBloc(context);
+    userBloc.getUsers();
 
-  Widget buildUserList() {
-    return ListView.builder(
-      itemCount: _users != null ? _users.length : 0,
-      itemBuilder: (BuildContext context, int index) {
-        return buildUserCard(index);
+    return StreamBuilder<List<User>>(
+      stream: userBloc.results,
+      initialData: [],
+      builder: (BuildContext context, AsyncSnapshot<List<User>> snapshot) {
+        return Scaffold(
+          body: Center(
+            child: buildUserList(snapshot.data),
+          ),
+        );
       },
     );
   }
 
-  Widget buildUserCard(int index) {
-    final User user = _users[index];
+  Widget buildUserList(List<User> users) {
+    return ListView.builder(
+      itemCount: users != null ? users.length : 0,
+      itemBuilder: (BuildContext context, int index) {
+        return buildUserCard(users[index]);
+      },
+    );
+  }
 
+  Widget buildUserCard(User user) {
     return Card(
       child: ListTile(
         leading: CircleAvatar(backgroundImage: NetworkImage(user.picture)),
