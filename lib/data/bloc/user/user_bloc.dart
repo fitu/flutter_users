@@ -1,17 +1,17 @@
-import 'package:flutter_random_user/data/repository/net/api_service.dart';
-import 'package:flutter_random_user/model/user.dart';
+import 'package:flutter_random_user/data/bloc/user/user_state.dart';
+import 'package:flutter_random_user/data/repository/repository.dart';
 import 'package:rxdart/rxdart.dart';
 
 class UserBloc {
-  final ApiService _apiService = ApiService();
+  final Repository _repository = Repository();
   final ReplaySubject<dynamic> _subject = ReplaySubject<dynamic>();
-  Stream<List<User>> _results = Stream.empty();
+  Stream<UserState> _results = Stream.empty();
 
   UserBloc() {
-    _results = _subject.switchMap<List<User>>((_) => _apiService.getUsers());
+    _results = _subject.switchMap<UserState>((_) => _repository.getUsers());
   }
 
-  Stream<List<User>> get results => _results;
+  Stream<UserState> get results => _results;
 
   Sink<dynamic> get sink => _subject;
 
@@ -19,4 +19,3 @@ class UserBloc {
     _subject.close();
   }
 }
-

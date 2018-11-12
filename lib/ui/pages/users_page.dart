@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_random_user/data/bloc/bloc_provider.dart';
 import 'package:flutter_random_user/data/bloc/user/user_bloc.dart';
+import 'package:flutter_random_user/data/bloc/user/user_state.dart';
 import 'package:flutter_random_user/model/user.dart';
 
 class UsersPage extends StatelessWidget {
@@ -9,24 +10,53 @@ class UsersPage extends StatelessWidget {
     final UserBloc userBloc = BlocProvider.userBloc(context);
     userBloc.sink.add('');
 
-    return StreamBuilder<List<User>>(
+    return StreamBuilder<UserState>(
       stream: userBloc.results,
-      initialData: [],
-      builder: (BuildContext context, AsyncSnapshot<List<User>> snapshot) {
+      initialData: LoadingUsers(),
+      builder: (BuildContext context, AsyncSnapshot<UserState> snapshot) {
+        final UserState state = snapshot.data;
         return Scaffold(
-          body: Center(
-            child: buildUserList(snapshot.data),
+          body: Container(
+            child: render(state),
           ),
         );
       },
     );
   }
 
-  Widget buildUserList(List<User> users) {
+  Widget render(UserState state) {
+    if (state is LoadingUsers) {
+      return renderLoading();
+    }
+    if (state is NotFoundUsers) {
+      return renderNotFoundUsers();
+    }
+    if (state is ErrorUsers) {
+      return renderErrorUsers(state);
+    }
+    if (state is SuccessUsers) {
+      return renderSuccessUsers(state);
+    }
+    throw UnimplementedError();
+  }
+
+  Widget renderLoading() {
+    return Center(child: CircularProgressIndicator());
+  }
+
+  Widget renderNotFoundUsers() {
+    return Center(child: Text('Not users found!'));
+  }
+
+  Widget renderErrorUsers(ErrorUsers state) {
+    return Center(child: Text(state.exception.toString()));
+  }
+
+  Widget renderSuccessUsers(SuccessUsers state) {
     return ListView.builder(
-      itemCount: users != null ? users.length : 0,
+      itemCount: state.users.length,
       itemBuilder: (BuildContext context, int index) {
-        return buildUserCard(users[index]);
+        return buildUserCard(state.users[index]);
       },
     );
   }
