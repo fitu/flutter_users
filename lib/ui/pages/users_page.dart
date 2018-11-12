@@ -7,7 +7,7 @@ class UsersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserBloc userBloc = BlocProvider.userBloc(context);
-    userBloc.getUsers();
+    userBloc.sink.add('');
 
     return StreamBuilder<List<User>>(
       stream: userBloc.results,
