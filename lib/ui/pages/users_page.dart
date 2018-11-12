@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_random_user/data/repository/net/parser/user_parser.dart';
 import 'package:flutter_random_user/model/user.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,7 +12,7 @@ class UsersPage extends StatefulWidget {
 
 class _UsersPageState extends State<UsersPage> {
   static const String URL = 'https://randomuser.me/api/?results=10';
-  List _users;
+  List<User> _users;
 
   @override
   void initState() {
@@ -23,7 +24,7 @@ class _UsersPageState extends State<UsersPage> {
     final response = await http.get(URL);
     setState(() {
       var body = json.decode(response.body);
-      _users = body['results'];
+      _users = UserParser.fromJson(body);
     });
   }
 
@@ -49,7 +50,7 @@ class _UsersPageState extends State<UsersPage> {
   }
 
   Widget buildUserCard(int index) {
-    final User user = buildUser(index);
+    final User user = _users[index];
 
     return Card(
       child: ListTile(
@@ -58,13 +59,5 @@ class _UsersPageState extends State<UsersPage> {
         subtitle: Text('${user.lastName}'),
       ),
     );
-  }
-
-  User buildUser(int index) {
-    final String id = _users[index]['id']['value'];
-    final String firstName = _users[index]['name']['first'];
-    final String lastName = _users[index]['name']['last'];
-    final String picture = _users[index]['picture']['medium'];
-    return User(id: id, firstName: firstName, lastName: lastName, picture: picture);
   }
 }
