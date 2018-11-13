@@ -7,9 +7,9 @@ class NotFoundUsers extends UserState {}
 class LoadingUsers extends UserState {}
 
 class ErrorUsers extends UserState {
-  final Exception exception;
+  final Error error;
 
-  ErrorUsers(this.exception);
+  ErrorUsers(this.error);
 }
 
 class SuccessUsers extends UserState {

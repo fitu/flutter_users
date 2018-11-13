@@ -49,7 +49,7 @@ class UsersPage extends StatelessWidget {
   }
 
   Widget renderErrorUsers(ErrorUsers state) {
-    return Center(child: Text(state.exception.toString()));
+    return Center(child: Text(state.error.toString()));
   }
 
   Widget renderSuccessUsers(SuccessUsers state) {

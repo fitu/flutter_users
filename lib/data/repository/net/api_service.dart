@@ -18,8 +18,8 @@ class ApiService {
       } else {
         yield SuccessUsers(users);
       }
-    } catch (e) {
-      yield ErrorUsers(e);
+    } catch (error) {
+      yield ErrorUsers(error);
     }
   }
 }
