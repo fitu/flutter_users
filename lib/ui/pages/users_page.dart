@@ -7,20 +7,20 @@ import 'package:flutter_random_user/model/user.dart';
 class UsersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final UserBloc userBloc = BlocProvider.userBloc(context);
+    final UserBloc userBloc = BlocProvider.of<UserBloc>(context);
     userBloc.sink.add('');
 
-    return StreamBuilder<UserState>(
-      stream: userBloc.results,
-      initialData: LoadingUsers(),
-      builder: (BuildContext context, AsyncSnapshot<UserState> snapshot) {
-        final UserState state = snapshot.data;
-        return Scaffold(
-          body: Container(
+    return Scaffold(
+      body: StreamBuilder<UserState>(
+        stream: userBloc.results,
+        initialData: LoadingUsers(),
+        builder: (BuildContext context, AsyncSnapshot<UserState> snapshot) {
+          final UserState state = snapshot.data;
+          return Container(
             child: render(state),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 

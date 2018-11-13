@@ -1,8 +1,9 @@
+import 'package:flutter_random_user/data/bloc/base_bloc.dart';
 import 'package:flutter_random_user/data/bloc/user/user_state.dart';
 import 'package:flutter_random_user/data/repository/repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-class UserBloc {
+class UserBloc implements BaseBloc {
   final Repository _repository = Repository();
   final ReplaySubject<dynamic> _subject = ReplaySubject<dynamic>();
   Stream<UserState> _results = Stream.empty();
@@ -15,6 +16,7 @@ class UserBloc {
 
   Sink<dynamic> get sink => _subject;
 
+  @override
   void dispose() {
     _subject.close();
   }
