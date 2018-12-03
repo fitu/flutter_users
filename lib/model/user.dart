@@ -1,4 +1,4 @@
-import 'package:flutter_random_user/data/repository/parser/user_parser.dart';
+import 'package:flutter_random_user/repository/parser/user_parser.dart';
 import 'package:meta/meta.dart';
 
 class User {

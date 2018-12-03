@@ -1,5 +1,5 @@
-import 'package:flutter_random_user/data/repository/db/db.dart';
-import 'package:flutter_random_user/data/repository/db/tables/user_table.dart';
+import 'package:flutter_random_user/repository/db/db.dart';
+import 'package:flutter_random_user/repository/db/tables/user_table.dart';
 
 class DAO {
   static final DAO _instance = DAO.internal();

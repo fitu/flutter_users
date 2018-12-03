@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter_random_user/data/repository/parser/user_parser.dart';
 import 'package:flutter_random_user/model/user.dart';
+import 'package:flutter_random_user/repository/parser/user_parser.dart';
 import 'package:sqflite/sqflite.dart';
 
 class TableFavoriteUser {
