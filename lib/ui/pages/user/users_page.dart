@@ -4,6 +4,7 @@ import 'package:flutter_random_user/bloc/user/user_bloc.dart';
 import 'package:flutter_random_user/bloc/user/user_event.dart';
 import 'package:flutter_random_user/bloc/user/user_state.dart';
 import 'package:flutter_random_user/model/user.dart';
+import 'package:flutter_random_user/repository/repository.dart';
 import 'package:flutter_random_user/ui/pages/user/favorite_button.dart';
 import 'package:flutter_random_user/ui/widgets/platform/platform_center_loading.dart';
 import 'package:flutter_random_user/ui/widgets/platform/platform_icon_button.dart';
@@ -11,7 +12,7 @@ import 'package:flutter_random_user/ui/widgets/platform/platform_item_widget.dar
 import 'package:flutter_random_user/ui/widgets/platform/platform_scaffold.dart';
 
 class UsersPage extends StatelessWidget {
-  final _bloc = UserBloc();
+  final _bloc = UserBloc(Repository());
 
   @override
   Widget build(BuildContext context) {
@@ -66,14 +67,14 @@ class _UsersBodyState extends State<UserBody> {
         if (_loading(state)) {
           toRender = _renderLoading();
         }
-        if(_error(state)) {
+        if (_error(state)) {
           toRender = _renderError(state);
         }
         if (_success(state)) {
           toRender = _renderSuccess(state);
         }
         if (_swapFavorite(state)) {
-     //     toRender = _swapFavorite(state);
+          //     toRender = _swapFavorite(state);
         }
         return toRender;
       },

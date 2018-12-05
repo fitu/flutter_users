@@ -6,8 +6,10 @@ import 'package:flutter_random_user/bloc/favorite/favorite_state.dart';
 import 'package:flutter_random_user/repository/repository.dart';
 
 class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
-  final Repository _repository = Repository();
+  final Repository _repository;
   bool isList = true;
+
+  FavoriteBloc(this._repository);
 
   FavoriteState get initialState => FavoriteState.initial();
 

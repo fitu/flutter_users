@@ -30,4 +30,18 @@ class UserState {
 
   factory UserState.swapFavorite(User user) =>
       UserState(isLoading: false, throwable: null, isList: null, users: null, user: user);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is UserState &&
+          runtimeType == other.runtimeType &&
+          isLoading == other.isLoading &&
+          throwable == other.throwable &&
+          isList == other.isList &&
+          users == other.users &&
+          user == other.user;
+
+  @override
+  int get hashCode => isLoading.hashCode ^ throwable.hashCode ^ isList.hashCode ^ users.hashCode ^ user.hashCode;
 }

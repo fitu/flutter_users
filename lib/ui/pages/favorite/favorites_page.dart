@@ -5,13 +5,14 @@ import 'package:flutter_random_user/bloc/favorite/favorite_bloc.dart';
 import 'package:flutter_random_user/bloc/favorite/favorite_event.dart';
 import 'package:flutter_random_user/bloc/favorite/favorite_state.dart';
 import 'package:flutter_random_user/model/Item.dart';
+import 'package:flutter_random_user/repository/repository.dart';
 import 'package:flutter_random_user/ui/widgets/platform/platform_icon_button.dart';
 import 'package:flutter_random_user/ui/widgets/platform/platform_scaffold.dart';
 import 'package:flutter_random_user/ui/widgets/selection_widget/item_selection_state.dart';
 import 'package:flutter_random_user/ui/widgets/selection_widget/selection_widget.dart';
 
 class FavoritesPage extends StatelessWidget {
-  final _bloc = FavoriteBloc();
+  final _bloc = FavoriteBloc(Repository());
 
   @override
   Widget build(BuildContext context) {
