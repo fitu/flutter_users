@@ -8,11 +8,9 @@ import 'package:mockito/mockito.dart';
 
 class RepositoryMock extends Mock implements Repository {}
 
-class UserMock extends Mock implements User {}
-
 void main() {
+  final repositoryMock = RepositoryMock();
   UserBloc bloc;
-  Repository repositoryMock = RepositoryMock();
 
   setUp(() {
     bloc = UserBloc(repositoryMock);
@@ -78,28 +76,26 @@ void main() {
   group('FavoritePressed()', () {
     test('calls removeFromFavorite', () {
       // Given
-      User userMock = UserMock();
-      when(userMock.isFavorite).thenReturn(true);
+      final user = User(id: 'foo', firstName: 'bar', lastName: 'baz', favorite: 1);
 
       // When
-      bloc.onFavoritePressed(FavoritePressed(userMock));
+      bloc.onFavoritePressed(FavoritePressed(user));
 
       // Then
-      verify(repositoryMock.removeFromFavorite(userMock)).called(1);
-      verifyNever(repositoryMock.saveAsFavorite(userMock));
+      verify(repositoryMock.removeFromFavorite(user)).called(1);
+      verifyNever(repositoryMock.saveAsFavorite(user));
     });
 
     test('calls saveAsFavorite', () {
       // Given
-      User userMock = UserMock();
-      when(userMock.isFavorite).thenReturn(false);
+      final user = User(id: 'foo', firstName: 'bar', lastName: 'baz', favorite: 0);
 
       // When
-      bloc.onFavoritePressed(FavoritePressed(userMock));
+      bloc.onFavoritePressed(FavoritePressed(user));
 
       // Then
-      verifyNever(repositoryMock.removeFromFavorite(userMock));
-      verify(repositoryMock.saveAsFavorite(userMock)).called(1);
+      verifyNever(repositoryMock.removeFromFavorite(user));
+      verify(repositoryMock.saveAsFavorite(user)).called(1);
     });
   });
 }

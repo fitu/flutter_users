@@ -3,12 +3,16 @@ import 'package:flutter_random_user/repository/db/dao.dart';
 import 'package:flutter_random_user/repository/net/api_service.dart';
 
 class Repository {
+  var _apiService = ApiService();
+  var _dao = DAO();
+
   static final Repository _instance = Repository.internal();
 
-  factory Repository() => _instance;
-
-  final _apiService = ApiService();
-  final _dao = DAO();
+  factory Repository({apiService, dao}) {
+    return _instance
+      .._apiService = apiService
+      .._dao = dao;
+  }
 
   Repository.internal();
 
@@ -18,7 +22,7 @@ class Repository {
 
   Future<User> saveAsFavorite(User user) async {
     final tableUser = await _dao.tableUser;
-    final User newUser = User.copy(user: user, newValues: {User.IS_FAVORITE: true});
+    final newUser = User.copy(user: user, newValues: {User.IS_FAVORITE: true});
     await tableUser.addUser(newUser);
     return newUser;
   }
@@ -26,7 +30,8 @@ class Repository {
   Future<User> removeFromFavorite(User user) async {
     final tableUser = await _dao.tableUser;
     await tableUser.deleteUser(user.id);
-    return User.copy(user: user, newValues: {User.IS_FAVORITE: false});
+    final newUser = User.copy(user: user, newValues: {User.IS_FAVORITE: false});
+    return newUser;
   }
 
   Future<List<User>> loadFavorites() async {

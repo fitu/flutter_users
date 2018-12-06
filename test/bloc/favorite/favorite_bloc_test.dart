@@ -9,8 +9,8 @@ import 'package:mockito/mockito.dart';
 class MockRepository extends Mock implements Repository {}
 
 void main() {
+  final repositoryMock = MockRepository();
   FavoriteBloc bloc;
-  Repository repositoryMock = MockRepository();
 
   setUp(() {
     bloc = FavoriteBloc(repositoryMock);

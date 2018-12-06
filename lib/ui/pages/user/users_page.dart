@@ -12,7 +12,9 @@ import 'package:flutter_random_user/ui/widgets/platform/platform_item_widget.dar
 import 'package:flutter_random_user/ui/widgets/platform/platform_scaffold.dart';
 
 class UsersPage extends StatelessWidget {
-  final _bloc = UserBloc(Repository());
+  final UserBloc _bloc;
+
+  UsersPage(this._bloc);
 
   @override
   Widget build(BuildContext context) {

@@ -2,12 +2,12 @@ import 'package:flutter_random_user/repository/db/db.dart';
 import 'package:flutter_random_user/repository/db/tables/user_table.dart';
 
 class DAO {
+  DBHelper helper;
+  TableFavoriteUser _tableUser;
+
   static final DAO _instance = DAO.internal();
 
   factory DAO() => _instance;
-
-  DBHelper helper;
-  TableFavoriteUser _tableUser;
 
   DAO.internal() {
     helper = DBHelper();
