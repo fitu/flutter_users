@@ -13,7 +13,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   UserState get initialState => UserState.initial();
 
-  void loadUsers() {
+  void loadUsers() async {
     dispatch(LoadUsers());
   }
 

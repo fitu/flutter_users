@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_random_user/bloc/user/user_bloc.dart';
 import 'package:flutter_random_user/bloc/user/user_state.dart';
+import 'package:flutter_random_user/model/user.dart';
 import 'package:flutter_random_user/ui/pages/user/users_page.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -18,10 +19,14 @@ void main() {
   });
 
   testWidgets('', (WidgetTester tester) async {
+    final List<User> users = [];
     when(bloc.initialState).thenReturn(UserState.initial());
-    when(bloc.loadUsers()).thenReturn(UserState.loading());
+    when(bloc.loadUsers()).thenAnswer((_) => Stream.fromIterable([
+          UserState.loading(),
+          UserState.success(users),
+        ]));
 
     await tester.pumpWidget(usersPage);
-    expect(true, true);
+    verify(bloc.loadUsers()).called(1);
   });
 }

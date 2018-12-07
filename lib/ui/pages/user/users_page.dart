@@ -4,7 +4,6 @@ import 'package:flutter_random_user/bloc/user/user_bloc.dart';
 import 'package:flutter_random_user/bloc/user/user_event.dart';
 import 'package:flutter_random_user/bloc/user/user_state.dart';
 import 'package:flutter_random_user/model/user.dart';
-import 'package:flutter_random_user/repository/repository.dart';
 import 'package:flutter_random_user/ui/pages/user/favorite_button.dart';
 import 'package:flutter_random_user/ui/widgets/platform/platform_center_loading.dart';
 import 'package:flutter_random_user/ui/widgets/platform/platform_icon_button.dart';
@@ -49,8 +48,6 @@ class _UsersBodyState extends State<UserBody> {
 
   bool _success(UserState state) => state.users != null;
 
-  bool _swapFavorite(UserState state) => state.user != null;
-
   @override
   void initState() {
     super.initState();
@@ -74,9 +71,6 @@ class _UsersBodyState extends State<UserBody> {
         }
         if (_success(state)) {
           toRender = _renderSuccess(state);
-        }
-        if (_swapFavorite(state)) {
-          //     toRender = _swapFavorite(state);
         }
         return toRender;
       },
@@ -106,11 +100,12 @@ class _UsersBodyState extends State<UserBody> {
 
   Widget buildUserCard(User user) {
     return PlatformItemWidget(
-        child: ListTile(
-      leading: CircleAvatar(backgroundImage: NetworkImage(user.picture)),
-      title: Text('${user.firstName}'),
-      subtitle: Text('${user.lastName}'),
-      trailing: FavoriteButton(user, widget.bloc),
-    ));
+      child: ListTile(
+        leading: CircleAvatar(backgroundImage: NetworkImage(user.picture)),
+        title: Text('${user.firstName}'),
+        subtitle: Text('${user.lastName}'),
+        trailing: FavoriteButton(user, widget.bloc),
+      ),
+    );
   }
 }
