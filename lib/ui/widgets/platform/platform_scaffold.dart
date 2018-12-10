@@ -1,16 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_random_user/ui/widgets/platform/platform_widget.dart';
 
 class PlatformScaffold extends PlatformWidget<CupertinoPageScaffold, Scaffold> {
   final String title;
   final Widget child;
   final Widget rightIconButton;
+  final Key key;
 
-  PlatformScaffold(
-      {@required this.title,
-      @required this.child,
-      @required this.rightIconButton});
+  PlatformScaffold({@required this.title, @required this.child, @required this.rightIconButton, this.key}) : super(key);
 
   @override
   Scaffold buildAndroidWidget(BuildContext context) {

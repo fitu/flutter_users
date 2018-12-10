@@ -1,7 +1,11 @@
-import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 
+import 'package:flutter/material.dart';
+
 abstract class PlatformWidget<I extends Widget, A extends Widget> extends StatelessWidget {
+  final Key key;
+
+  PlatformWidget(this.key) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

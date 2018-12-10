@@ -11,7 +11,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   UserBloc(this._repository);
 
-  UserState get initialState => UserState.initial();
+  UserState get initialState => UserState.loading();
 
   void loadUsers() async {
     dispatch(LoadUsers());
@@ -19,7 +19,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   @override
   Stream<UserState> mapEventToState(UserState state, UserEvent event) async* {
-    yield UserState.loading();
     try {
       final users = await _repository.getUsers();
       yield UserState.success(users);

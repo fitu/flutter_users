@@ -1,13 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_random_user/ui/widgets/platform/platform_widget.dart';
 
-
 class PlatformItemWidget extends PlatformWidget<Widget, Card> {
-
   final Widget child;
+  final Key key;
 
-  PlatformItemWidget({this.child});
+  PlatformItemWidget({this.child, this.key}) : super(key);
 
   @override
   Card buildAndroidWidget(BuildContext context) {

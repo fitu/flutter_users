@@ -21,6 +21,7 @@ class UsersPage extends StatelessWidget {
       title: 'Random Users',
       child: UserBody(bloc: _bloc),
       rightIconButton: PlatformIconButton(
+        key: Key('navigateToFavorites'),
         iconData: Icons.favorite,
         onPressed: () {
           Navigator.pushNamed(context, '/favorites');
@@ -42,8 +43,6 @@ class UserBody extends StatefulWidget {
 class _UsersBodyState extends State<UserBody> {
   bool _notFound(UserState state) => state.isLoading == false && state.users == null;
 
-  bool _loading(UserState state) => state.isLoading == true;
-
   bool _error(UserState state) => state.throwable != null;
 
   bool _success(UserState state) => state.users != null;
@@ -62,9 +61,6 @@ class _UsersBodyState extends State<UserBody> {
         Widget toRender = _renderLoading();
         if (_notFound(state)) {
           toRender = _renderNotFound();
-        }
-        if (_loading(state)) {
-          toRender = _renderLoading();
         }
         if (_error(state)) {
           toRender = _renderError(state);

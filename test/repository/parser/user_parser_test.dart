@@ -8,11 +8,11 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test('parse is correct', () async {
     // Given
-    final file = File('res/responses/user/user_response.json');
-    final jsonMap = json.decode(await file.readAsString());
+    var file = File('res/responses/user/user_response.json');
+    var jsonMap = json.decode(await file.readAsString());
 
     // When
-    final List<User> users = UserParser.fromBE(jsonMap);
+    List<User> users = UserParser.fromBE(jsonMap);
 
     // Then
     expect(users.length, 10);

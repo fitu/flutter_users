@@ -29,48 +29,38 @@ void main() {
     expectLater(bloc.state, emitsInOrder([FavoriteState.initial()]));
   });
 
-  group('LoadFavorites()', () {
-    test('emits [initial, favorites] for LoadFavorites', () {
-      // Given
-      final List<User> expectedUsers = [];
-      final expectedResponse = [
-        FavoriteState.initial(),
-        FavoriteState.favorites(expectedUsers),
-      ];
-      when(repositoryMock.loadFavorites()).thenAnswer((_) => Future.value(expectedUsers));
+  test('emits [initial, favorites] for LoadFavorites', () {
+    // Given
+    List<User> expectedUsers = [];
+    var expectedResponse = [
+      FavoriteState.initial(),
+      FavoriteState.favorites(expectedUsers),
+    ];
+    when(repositoryMock.loadFavorites()).thenAnswer((_) => Future.value(expectedUsers));
 
-      // When
-      bloc.dispatch(LoadFavorites());
+    // When
+    bloc.dispatch(LoadFavorites());
 
-      // Then
-      expectLater(
-        bloc.state,
-        emitsInOrder(expectedResponse),
-      );
-    });
+    // Then
+    expectLater(bloc.state, emitsInOrder(expectedResponse));
   });
 
-  group('SwapRenderMode()', () {
-    test('emits [initial, swapList] for SwapRenderMode', () {
-      expect(bloc.isList, true);
+  test('emits [initial, swapList] for SwapRenderMode', () {
+    expect(bloc.isList, true);
 
-      // Given
-      final List<User> expectedUsers = [];
-      when(repositoryMock.loadFavorites()).thenAnswer((_) => Future.value(expectedUsers));
+    // Given
+    List<User> expectedUsers = [];
+    when(repositoryMock.loadFavorites()).thenAnswer((_) => Future.value(expectedUsers));
 
-      final expectedResponse = [
-        FavoriteState.initial(),
-        FavoriteState.swapList(expectedUsers, false),
-      ];
+    var expectedResponse = [
+      FavoriteState.initial(),
+      FavoriteState.swapList(expectedUsers, false),
+    ];
 
-      // When
-      bloc.dispatch(SwapRenderMode());
+    // When
+    bloc.dispatch(SwapRenderMode());
 
-      // Then
-      expectLater(
-        bloc.state,
-        emitsInOrder(expectedResponse),
-      );
-    });
+    // Then
+    expectLater(bloc.state, emitsInOrder(expectedResponse));
   });
 }

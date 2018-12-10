@@ -6,6 +6,8 @@ import 'package:flutter_random_user/repository/repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
+import '../../ui/util/users_factory.dart';
+
 class RepositoryMock extends Mock implements Repository {}
 
 void main() {
@@ -16,9 +18,9 @@ void main() {
     bloc = UserBloc(repositoryMock);
   });
 
-  test('initial state is correct', () {
+  test('loading state is correct', () {
     // Then
-    expect(bloc.initialState, UserState.initial());
+    expect(bloc.initialState, UserState.loading());
   });
 
   test('dispose does not emit new state', () {
@@ -26,17 +28,16 @@ void main() {
     bloc.dispose();
 
     // Then
-    expectLater(bloc.state, emitsInOrder([UserState.initial()]));
+    expectLater(bloc.state, emitsInOrder([UserState.loading()]));
   });
 
   group('LoadUsers()', () {
-    test('emits [initial, loading, success] for LoadUsers', () {
+    test('emits [loading, success] for LoadUsers', () {
       // Given
-      final List<User> expectedUsers = [];
+      List<User> expectedUsers = [];
       when(repositoryMock.getUsers()).thenAnswer((_) => Future.value(expectedUsers));
 
-      final expectedResponse = [
-        UserState.initial(),
+      var expectedResponse = [
         UserState.loading(),
         UserState.success(expectedUsers),
       ];
@@ -45,19 +46,15 @@ void main() {
       bloc.dispatch(LoadUsers());
 
       // Then
-      expectLater(
-        bloc.state,
-        emitsInOrder(expectedResponse),
-      );
+      expectLater(bloc.state, emitsInOrder(expectedResponse));
     });
 
-    test('emits [initial, loading, error] for LoadUsers', () {
+    test('emits [loading, error] for LoadUsers', () {
       // Given
-      final Error expectedError = Error();
+      Error expectedError = Error();
       when(repositoryMock.getUsers()).thenThrow(expectedError);
 
-      final expectedResponse = [
-        UserState.initial(),
+      var expectedResponse = [
         UserState.loading(),
         UserState.error(expectedError),
       ];
@@ -66,17 +63,14 @@ void main() {
       bloc.dispatch(LoadUsers());
 
       // Then
-      expectLater(
-        bloc.state,
-        emitsInOrder(expectedResponse),
-      );
+      expectLater(bloc.state, emitsInOrder(expectedResponse));
     });
   });
 
   group('FavoritePressed()', () {
     test('calls removeFromFavorite', () {
       // Given
-      final user = User(id: 'foo', firstName: 'bar', lastName: 'baz', favorite: 1);
+      final user = UserFactory.getFavoriteUser();
 
       // When
       bloc.onFavoritePressed(FavoritePressed(user));
@@ -88,7 +82,7 @@ void main() {
 
     test('calls saveAsFavorite', () {
       // Given
-      final user = User(id: 'foo', firstName: 'bar', lastName: 'baz', favorite: 0);
+      final user = UserFactory.getNotFavoriteUser();
 
       // When
       bloc.onFavoritePressed(FavoritePressed(user));

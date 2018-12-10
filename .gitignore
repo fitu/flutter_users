@@ -27,6 +27,7 @@
 .pub-cache/
 .pub/
 build/
+coverage/
 
 # Android related
 **/android/**/gradle-wrapper.jar
@@ -69,3 +70,7 @@ build/
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+
+# This project
+res/responses/
+test_driver/

@@ -25,6 +25,7 @@ class FavoriteButtonState extends State<FavoriteButton> {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+        key: Key(newUser.id),
         icon: Icon(Icons.favorite, color: newUser.isFavorite ? Colors.red : Colors.blueGrey),
         onPressed: () => changeFavorite(newUser));
   }
