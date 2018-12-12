@@ -13,7 +13,7 @@ void main() {
   FavoriteBloc bloc;
 
   setUp(() {
-    bloc = FavoriteBloc(repositoryMock);
+    bloc = FavoriteBloc(repository: repositoryMock);
   });
 
   test('initial state is correct', () {

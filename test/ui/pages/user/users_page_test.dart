@@ -92,12 +92,12 @@ void main() {
 
   testWidgets('onError shows text', (WidgetTester tester) async {
     // Given
-    when(bloc.initialState).thenReturn(UserState.error(Error()));
+    when(bloc.initialState).thenReturn(UserState.error('There was an error'));
 
     // When
     await provideMockedNetworkImages(() async => await tester.pumpWidget(usersPage));
 
     // Then
-    expect(find.text('Instance of \'Error\''), findsOneWidget);
+    expect(find.text('There was an error'), findsOneWidget);
   });
 }

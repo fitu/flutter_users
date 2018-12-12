@@ -1,6 +1,6 @@
 class Api {
-  static const String BASE_URL = 'https://randomuser.me/api/';
+  static String BASE_URL = 'https://randomuser.me/api/';
 
   // Users
-  static const String URL_GET_USERS = BASE_URL + '?results=10';
+  static String URL_GET_USERS = BASE_URL + '?results=10';
 }

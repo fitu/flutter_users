@@ -15,7 +15,7 @@ void main() {
   UserBloc bloc;
 
   setUp(() {
-    bloc = UserBloc(repositoryMock);
+    bloc = UserBloc(repository: repositoryMock);
   });
 
   test('loading state is correct', () {
@@ -51,12 +51,11 @@ void main() {
 
     test('emits [loading, error] for LoadUsers', () {
       // Given
-      Error expectedError = Error();
-      when(repositoryMock.getUsers()).thenThrow(expectedError);
+      when(repositoryMock.getUsers()).thenThrow('foo');
 
       var expectedResponse = [
         UserState.loading(),
-        UserState.error(expectedError),
+        UserState.error('foo'),
       ];
 
       // When

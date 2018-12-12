@@ -8,8 +8,8 @@ import 'package:flutter_random_user/ui/pages/favorite/favorites_page.dart';
 import 'package:flutter_random_user/ui/pages/user/users_page.dart';
 
 class UsersApp extends StatelessWidget {
-  final _userBloc = UserBloc(Repository(apiService: ApiService(), dao: DAO()));
-  final _favoriteBloc = FavoriteBloc(Repository(apiService: ApiService(), dao: DAO()));
+  final _userBloc = UserBloc();
+  final _favoriteBloc = FavoriteBloc();
 
   @override
   Widget build(BuildContext context) {

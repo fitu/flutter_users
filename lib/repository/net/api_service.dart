@@ -14,7 +14,10 @@ class ApiService {
   ApiService.internal();
 
   Future<List<User>> getUsers() async {
-    final response = await http.get(Uri.parse(Api.URL_GET_USERS));
-    return UserParser.fromBE(json.decode(response.body));
+    final response = await http.get(Api.URL_GET_USERS);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return UserParser.fromBE(json.decode(response.body));
+    }
+    throw 'There was an error';
   }
 }

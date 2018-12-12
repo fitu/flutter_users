@@ -7,9 +7,11 @@ import 'package:flutter_random_user/model/user.dart';
 import 'package:flutter_random_user/repository/repository.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
-  final Repository _repository;
+  var repository;
 
-  UserBloc(this._repository);
+  UserBloc({this.repository}) {
+    this.repository = repository != null ? repository : Repository();
+  }
 
   UserState get initialState => UserState.loading();
 
@@ -20,16 +22,18 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   @override
   Stream<UserState> mapEventToState(UserState state, UserEvent event) async* {
     try {
-      final users = await _repository.getUsers();
+      final users = await repository.getUsers();
       yield UserState.success(users);
-    } catch (error) {
-      yield UserState.error(error);
+    } on String catch (exception) {
+      yield UserState.error(exception);
+    } catch (exception) {
+      yield UserState.error(exception.toString());
     }
   }
 
   Future<User> onFavoritePressed(FavoritePressed event) async {
     return event.user.isFavorite
-        ? await _repository.removeFromFavorite(event.user)
-        : await _repository.saveAsFavorite(event.user);
+        ? await repository.removeFromFavorite(event.user)
+        : await repository.saveAsFavorite(event.user);
   }
 }

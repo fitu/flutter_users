@@ -43,7 +43,7 @@ class UserBody extends StatefulWidget {
 class _UsersBodyState extends State<UserBody> {
   bool _notFound(UserState state) => state.isLoading == false && state.users == null;
 
-  bool _error(UserState state) => state.throwable != null;
+  bool _error(UserState state) => state.errorMessage != null;
 
   bool _success(UserState state) => state.users != null;
 
@@ -82,7 +82,7 @@ class _UsersBodyState extends State<UserBody> {
   }
 
   Widget _renderError(UserState state) {
-    return Center(child: Text(state.throwable.toString()));
+    return Center(child: Text(state.errorMessage));
   }
 
   Widget _renderSuccess(UserState state) {

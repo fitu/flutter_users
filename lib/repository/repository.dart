@@ -3,15 +3,15 @@ import 'package:flutter_random_user/repository/db/dao.dart';
 import 'package:flutter_random_user/repository/net/api_service.dart';
 
 class Repository {
-  var _apiService = ApiService();
-  var _dao = DAO();
+  var _apiService;
+  var _dao;
 
   static final Repository _instance = Repository.internal();
 
   factory Repository({apiService, dao}) {
     return _instance
-      .._apiService = apiService
-      .._dao = dao;
+      .._apiService = apiService != null ? apiService : ApiService()
+      .._dao = dao != null ? dao : DAO();
   }
 
   Repository.internal();
